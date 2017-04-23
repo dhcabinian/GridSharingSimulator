@@ -1,0 +1,15 @@
+Implement Ito, Saito Nishizekis Share Assignment
+	Given an r participants and m + 1 threshold
+	Compute who gets what shares
+Implement Gridsharing
+	Given a l,b,c,r 
+		Compute min number of servers
+		Compute number of shares
+		Compute who gets which shares
+		Display on grid
+
+	Given a specific set of l,b,c, for r [[5, 10]] 
+		Compute the min N for servers
+		Compute # opf shares
+		Compute Storage Blowup
+		Plot all 3 as a function of r
