@@ -1,4 +1,4 @@
-ECE 6102: Dependable Distributed Systems 
+ECE 6102: Dependable Distributed Systems
 
 Programming Assignment 4
 
@@ -9,7 +9,7 @@ Due date: April 25, 2017, 11:55 PM
 
 Main Idea
 
-In this assignment, you will implement Ito, Saito, and Nishizeki’s Share Assignment Scheme , as well as a way of generating and comparing Grid Sharing systems as a terminal application. The program will be capable of taking user input for expected numbers of Byzantine, Crashed, and Leaky servers as well as the desired number of rows the user wishes to use. This terminal application will have two major parts: 1) Generating Ito Share Assignment and outputting the result in an easily viewable format (we suggest using python’s PrettyTable library) and 2) Computing Grid Sharing and displaying the assigned shares per server based on a user provided l,b,c, and r.
+In this assignment, you will implement Ito, Saito, and Nishizeki’s Share Assignment Scheme , as well as a simulator for  Grid Sharing systems as a terminal application. The program will be capable of taking user input for expected numbers of Byzantine, Crashed, and Leaky servers as well as the desired number of rows the user wishes to use. This terminal application will have two major parts: 1) Generating Ito Share Assignment and outputting the result in an easily viewable format (we suggest using python’s PrettyTable library) and 2) Computing Grid Sharing and displaying the assigned shares per server based on a user provided l,b,c, and r.
 
 This application will help you learn about the methodologies utilized by Grid Sharing and be able to view their effectiveness. It will also be capable of helping a company trying to determine how many servers they should use and in what format to handle a given their desire to handle a particular number of Leaky, Byzantine, and Crashed servers.
 
@@ -17,37 +17,56 @@ Part 1
 
 Implement Ito, Saito, and Nishizeki’s Share Assignment as described in the "An Approach for Fault Tolerant and Secure Data Storage in Collaborative Work Environments," Subbiah and Blough paper. This includes the following:
 
-Asking for user input for total number of participants who can have access to a secret, and for the number of participants required to successfully access that secret.
+- Prompt the user for the total number of participants who can have access to a secret, and for the number of participants required to successfully access that secret.
 
-Displaying the total number of shares and the number of shares per participant that make this algorithm possible.
+- Display the total number of shares and the number of shares per participant that make this algorithm possible.
 
-Display in a table each participant and their respective share assignments.
-	We recommend starting with share numbers (1 to n total shares) then moving on to generate random (unique) binary keys.
+- Display in a table each participant and their respective share assignments.
+
+- You will need to perform bounds checking on the user inputs.
 
 Part 2
 
 Implement the Grid Sharing algorithm as described in the "An Approach for Fault Tolerant and Secure Data Storage in Collaborative Work Environments," Subbiah and Blough paper. This part of the terminal application will take inputs from the user representing the number of Leaky, Byzantine, and Crashed servers that the system needs to be able to handle as well as the desired number of rows. Your application will take these inputs and compute the shares given to each participant as well as the required number of rows needed to handle the various server failures. This part completes the following:
 
-Asks user for number of Leaky, Byzantine, and Crashed servers the system needs to handle
+1. Compute share allocation according to the proposed framework in the GridSharing paper.
 
-Ask user for the number of rows of servers desired.
+- Prompt the user for input for number of Leaky, Byzantine, and Crashed servers the system needs to handle
 
-Compute the total number of shares, the number of shares per row, and the assigned shares per row.
+- Prompt the user for input for the number of rows of servers desired
 
-Output statistics including: Leaky Servers, Byzantine Servers, Crash Servers, Rows, Min Number of Servers, and the Number of Shares per secret.
+- Output characteristics of the implemented GridSharing framework based on user input:
+	Leaky Servers,
+	Byzantine Servers,
+	Crash Servers,
+	Rows,
+	Min Number of Servers,
+	Number of Shares per secret,
+	assigned shares per row,
+	number of shares per row,
+	total number of shares,
 
-Output a table that displays the share assignments to each server and displays which servers are in the same rows.
+- Output a table that displays the share assignments to each server and displays which servers are in the same rows.
 
-Add a separate option that allows the user to provide a Filename to store the outputted table into a .csv file that can easily be viewed in a spreadsheet.
+- You will need to perform bounds checking on the user inputs.
 
-Add a separate option that allows the user view plots that display the following for a range of number of rows:
+2. Plot
+
+- allows the user view plots that display the following characteristics (as defined in the GridSharing paper) for a range of number of rows:
 	Min Number of Servers
 	Server Blowup
 	Number of Shares
-The user should be able to provide an l, b, and c as well as a range for r to graph these characteristics.
+
+- User should be able to provide an l, b, and c as well as a range for r to graph these characteristics.
+
+3. Store share allocation in a CSV file.
+
+- allows the user to provide a Filename to store the outputted table into a .csv file that can easily be viewed in a spreadsheet.
+
+
 
 Extra Credit
-Add a separate option that allows the user to input a short string (less than 5 characters) as a secret and show how the secret is corrupted when an incorrect number of servers, or incorrect number of rows, are queried for the secret, but retrieved when providing a valid subset of servers.
+Add a separate option that allows the user to input a short string (less than 5 characters) as a secret and show how the secret is corrupted when an incorrect number of servers, or incorrect number of rows, are queried for the secret, but retrieved when providing a valid subset of servers. We recommend starting with share numbers (0 to n-1 total shares) then converting to generate random (unique) binary keys.
 
 Useful Links/Functions:
 
