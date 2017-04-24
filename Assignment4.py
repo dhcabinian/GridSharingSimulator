@@ -4,7 +4,6 @@ import itertools
 import math
 from prettytable import PrettyTable
 import random
-
 import csv
 
 
