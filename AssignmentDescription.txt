@@ -42,9 +42,6 @@ Implement the Grid Sharing algorithm as described in the "An Approach for Fault 
 	Rows,
 	Min Number of Servers,
 	Number of Shares per secret,
-	assigned shares per row,
-	number of shares per row,
-	total number of shares,
 
 - Output a table that displays the share assignments to each server and displays which servers are in the same rows.
 
