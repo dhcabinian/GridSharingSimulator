@@ -116,6 +116,15 @@ def Display_Gridshare(shareAssignment, numServersPerRow):
         table.add_row(row)
     print table
 
+def Display_Ito_Stats(r,m):
+    TotalShares = nCr(r,m)
+    SharesPerParticipant = nCr(r-1, m)
+    print "---Stats---\n"
+    print "Total Number of Shares: " + str(TotalShares)
+    print "Shares per Participant: " + str(SharesPerParticipant)
+    print "------------\n"
+
+
 def Display_Stats(l, b, c, r):
     minN = Compute_Min_N(l, b, c, r)
     numShares = Compute_Num_Shares(l, b, r)
@@ -213,6 +222,7 @@ def driverPart1():
     print "m where m + 1 is the threshold"
     r = input("Input r the number of participants: ")
     m = input("Input m where m + 1 is the threshold: ")
+    Display_Ito_Stats(int(r), int(m))
     Ito_Share_Assignment(int(r), int(m), 1)
     raw_input("Select enter to return to the main menu.")
 
