@@ -3,8 +3,7 @@ import numpy as np
 import itertools
 import math
 from prettytable import PrettyTable
-
-
+import csv
 
 
 
@@ -58,6 +57,7 @@ def Gridsharing(l, b, c):
     shareAssignment = Compute_Sharers(l, b, r)
     Display_Stats(l, b, c, r)
     Display_Gridshare(shareAssignment, numServers/r)
+    Export_CSV(shareAssignment,numServers/r,"outputfile.csv")
 
 # Utilizing r for smallest number of servers required
 # r = 4b + l + c + 1
@@ -121,6 +121,22 @@ def Display_Stats(l, b, c, r):
     print "MinN: " + str(minN)
     print "Num of Shares per secret: " + str(numShares) + "\n"
     print "-----------\n"
+
+def Export_CSV(shareAssignment,numServersPerRow,filename):
+    with open(filename, 'wb') as csvfile:
+        writer = csv.writer(csvfile, delimiter=';', quoting=csv.QUOTE_MINIMAL)
+        string = "Secret Sharing Row"
+        for col in range(numServersPerRow):
+            string = string + "; Replication Col" + str(col);
+        writer.writerow([string]);
+        keys = shareAssignment.keys()
+        for key in keys:
+            row = []
+            row.append(key)
+            for col in range(numServersPerRow):
+                row.append(shareAssignment[key])
+            writer.writerow(row)
+
 
 # Given a specific set of l,b,c, for r [[5, 10]]
 # 	Compute the min N for servers
