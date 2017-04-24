@@ -264,10 +264,10 @@ def Plot_Min_N(l, b, c, rows):
         minN = Compute_Min_N(l, b, c, r)
         minNList.append(minN)
     plt.plot(rows, minNList)
-    plt.title('Minimum Number of servers required for l,b,c,r')
+    plt.title('Min. Number of servers satisfying l,b,c,r')
     #min(N): is the minimum number of servers required for a given l, b, c, and r. This is given by the smallest N satisfying Inequality 3, with N being a multiple of r.
-    plt.ylabel('Smalles Number of Servers (Multiple of r)')
-    plt.xlabel('')
+    plt.ylabel('Smallest number of servers (Multiple of r)')
+    plt.xlabel('Rows')
     plt.grid(True)
 
 def Plot_Num_Shares(l, b, rows):
@@ -276,10 +276,10 @@ def Plot_Num_Shares(l, b, rows):
         numShares = Compute_Num_Shares(l, b, r)
         numSharesList.append(numShares)
     plt.plot(rows, numSharesList)
-    plt.title('Total number of shares generated per secret')
+    plt.title('Shares per secret')
     ##Shares: The total number of shares generated per secret. For the proposed framework, #Shares = r choose (l + b)
-    plt.ylabel('Total number of shares')
-    plt.xlabel('')
+    plt.ylabel('Shares')
+    plt.xlabel('Rows')
     plt.grid(True)
 
 def Plot_Storage_Blowup(l, b, rows):
@@ -288,10 +288,10 @@ def Plot_Storage_Blowup(l, b, rows):
         numShares = Compute_Storage_Blowup(l, b, r)
         storageBlowupList.append(numShares)
     plt.plot(rows, storageBlowupList)
-    plt.title('Storage Blowup as a ratio of the storage space taken at each server to the size of the data encoded')
+    plt.title('Storage Blowup (storage per server:total data)')
     #For the proposed framework, the storage blowup fac-tor is (r-1) choose (l+b). Since we use the XOR secret sharing scheme, size of share is the same as the size of the secret
-    plt.ylabel('Ratio of Storage Space taken to the size of the data encoded')
-    plt.xlabel('')
+    plt.ylabel('Storage per server : Encoded data size')
+    plt.xlabel('Rows')
     plt.grid(True)
 
 def Plot_All(l, b, c, rows):
