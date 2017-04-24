@@ -5,7 +5,7 @@ import math
 from prettytable import PrettyTable
 import random
 
-
+import csv
 
 
 
@@ -108,6 +108,23 @@ def Gridsharing(l, b, c, secret=None):
         Display_Stats(l, b, c, r)
         Display_Gridshare(shareAssignment, numServers/r)
         return shareAssignment
+
+def GridsharingSave(l, b, c, filename, secret=None):
+    if secret is None:
+        r = Choose_Num_Rows(l, b, c)
+        numServers = Compute_Min_N(l, b, c, r)
+        shareAssignment = Compute_Sharers(l, b, r, None)
+        Display_Stats(l, b, c, r)
+        Display_Gridshare(shareAssignment, numServers/r)
+    else:
+        r = Choose_Num_Rows(l, b, c)
+        numServers = Compute_Min_N(l, b, c, r)
+        shareAssignment = Compute_Sharers(l, b, r, secret)
+        Display_Stats(l, b, c, r)
+        Display_Gridshare(shareAssignment, numServers/r)
+    Export_CSV(shareAssignment,numServers/r, filename)
+    return shareAssignment
+
 # Utilizing r for smallest number of servers required
 # r = 4b + l + c + 1
 # Lower bound = l + b + 1
@@ -159,6 +176,15 @@ def Display_Gridshare(shareAssignment, numServersPerRow):
         table.add_row(row)
     print table
 
+def Display_Ito_Stats(r,m):
+    TotalShares = nCr(r,m)
+    SharesPerParticipant = nCr(r-1, m)
+    print "---Stats---\n"
+    print "Total Number of Shares: " + str(TotalShares)
+    print "Shares per Participant: " + str(SharesPerParticipant)
+    print "------------\n"
+
+
 def Display_Stats(l, b, c, r):
     minN = Compute_Min_N(l, b, c, r)
     numShares = Compute_Num_Shares(l, b, r)
@@ -194,6 +220,23 @@ def Compute_Secret(shares):
         secretResultDec = secretResultDec >> 7
 
     return secret
+
+def Export_CSV(shareAssignment,numServersPerRow,filename):
+    with open(filename, 'wb') as csvfile:
+        writer = csv.writer(csvfile, delimiter=';', quoting=csv.QUOTE_MINIMAL)
+        string = "Secret Sharing Row"
+        for col in range(numServersPerRow):
+            string = string + "; Replication Col" + str(col);
+        writer.writerow([string]);
+        keys = shareAssignment.keys()
+        for key in keys:
+            row = []
+            row.append(key)
+            for col in range(numServersPerRow):
+                row.append(shareAssignment[key])
+            writer.writerow(row)
+
+
 # Given a specific set of l,b,c, for r [[5, 10]]
 # 	Compute the min N for servers
 # 	Compute # opf shares
@@ -262,6 +305,7 @@ def driverPart1():
     print "m where m + 1 is the threshold"
     r = input("Input r the number of participants: ")
     m = input("Input m where m + 1 is the threshold: ")
+    Display_Ito_Stats(int(r), int(m))
     Ito_Share_Assignment(int(r), int(m), 1)
     raw_input("Select enter to return to the main menu.")
 
@@ -271,7 +315,8 @@ def driverPart2():
     print "\t1. Compute shares"
     print "\t2. Plot characteristics"
     print "\t3. Attempt Secret Sharing"
-    print "\t4. Exit"
+    print "\t4. Store Shares in File"
+    print "\t5. Exit"
     choice = input("Choice: ")
     if (int(choice) == 1):
         driverPart2Shares()
@@ -280,6 +325,8 @@ def driverPart2():
     elif (int(choice) == 3):
         driverPart2Secret()
     elif (int(choice) == 4):
+        driverPart2Save()
+    elif (int(choice) == 5):
         exit(0)
     else:
         print "Error in choice input"
@@ -292,6 +339,16 @@ def driverPart2Shares():
     b = input("Byzantine Servers (b) = ")
     c = input("Crash Servers (c) = ")
     Gridsharing(int(l), int(b), int(c))
+    raw_input("Select enter to return to the main menu.")
+
+def driverPart2Save():
+    print "------ GridSharing Compute Shares ------"
+    print "Give an l, b, c, r to simulate GridSharing"
+    l = input("Leaky Servers (l) =  ")
+    b = input("Byzantine Servers (b) = ")
+    c = input("Crash Servers (c) = ")
+    filename = raw_input("Provide a .csv file to store the resulting data: ")
+    GridsharingSave(int(l), int(b), int(c), filename)
     raw_input("Select enter to return to the main menu.")
 
 def driverPart2Plot():
