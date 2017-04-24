@@ -142,15 +142,27 @@ def Choose_Num_Rows(l, b, c):
         print "Error in row input"
         exit(1)
 
+def Check_Num_Rows(l, b, c, rows):
+    upperBound = 4*b + l + c + 1
+    lowerBound = l + b + 1
+    filteredRows = []
+    for row in rows:
+        if (int(row) <= upperBound) and (int(row) >= lowerBound):
+            filteredRows.append(int(row))
+    return filteredRows
 
 # is the minimum number of servers required for a given l, b, c, and r. This is given by the smallest N satisfying Inequality 3, with N being a multiple of r.
 def Compute_Min_N(l, b, c, r):
+    l = float(l)
+    b = float(b)
+    c = float(c)
+    r = float(r)
     minN = (3*b + c + 1) / (1 - ((l+b)/r))
     remainder = minN % r
     if remainder != 0:
-        return minN + (r - remainder)
+        return int(minN + (r - remainder))
     else:
-        return minN
+        return int(minN)
 
 # The total number of shares generated per secret. For the proposed framework, #Shares = r choose (l+b)
 def Compute_Num_Shares(l, b, r):
@@ -184,7 +196,6 @@ def Display_Ito_Stats(r,m):
     print "Shares per Participant: " + str(SharesPerParticipant)
     print "------------\n"
 
-
 def Display_Stats(l, b, c, r):
     minN = Compute_Min_N(l, b, c, r)
     numShares = Compute_Num_Shares(l, b, r)
@@ -197,15 +208,15 @@ def Display_Stats(l, b, c, r):
     print "Num of Shares per secret: " + str(numShares) + "\n"
     print "-----------\n"
 
-
 def Compute_Share_Set(shareAssignment, servers):
+    rows = len(shareAssignment.keys())
     shares = []
     for server in servers:
-        for share in shareAssignment[server]:
+        serverIndex = server % rows
+        for share in shareAssignment[serverIndex]:
             shares.append(share)
     sharesNoDups = list(set(shares))
     return sharesNoDups
-
 
 def Compute_Secret(shares):
     secretResultDec = 0
@@ -364,7 +375,8 @@ def driverPart2Plot():
     print "Enter a range of rows to plot against (e.x. 5,10)"
     print "The range will be limited by the bounds on r for GridSharing"
     start, stop = input("Enter a range: ")
-    rows = np.arange(start, stop + 1, 1)
+    unfilteredRows = np.arange(start, stop + 1, 1)
+    rows = Check_Num_Rows(int(l), int(b), int(c), unfilteredRows)
     Plot_All(int(l), int(b), int(c), rows)
     raw_input("Select enter to return to the main menu.")
 
@@ -388,7 +400,6 @@ def driverPart2Secret():
                 secretDec = (secretDec << 7) + asciiVal
         secretBin = bin(secretDec)
         print "Your secret in binary: " + secretBin
-        raw_input("Select enter to compute shares.")
         shareAssignment = Gridsharing(int(l), int(b), int(c), secretBin)
         print "Enter an array of servers to pull shares from: "
         print "Format should be comma separated e.x. 1,2,3,6"
