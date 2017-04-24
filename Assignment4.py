@@ -233,17 +233,19 @@ def Compute_Secret(shares):
 
 def Export_CSV(shareAssignment,numServersPerRow,filename):
     with open(filename, 'wb') as csvfile:
-        writer = csv.writer(csvfile, delimiter=';', quoting=csv.QUOTE_MINIMAL)
-        string = "Secret Sharing Row"
+        writer = csv.writer(csvfile, delimiter=',', quoting=csv.QUOTE_MINIMAL)
+        titleRow = []
+        titleRow.append("Secret Sharing Row")
         for col in range(numServersPerRow):
-            string = string + "; Replication Col" + str(col);
-        writer.writerow([string]);
+            titleRow.append("Replication Col: " + str(col));
+        writer.writerow(titleRow);
         keys = shareAssignment.keys()
         for key in keys:
             row = []
             row.append(key)
             for col in range(numServersPerRow):
-                row.append(shareAssignment[key])
+                shares = ';'.join(str(share) for share in shareAssignment[key])
+                row.append(shares)
             writer.writerow(row)
 
 
