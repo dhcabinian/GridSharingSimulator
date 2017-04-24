@@ -57,7 +57,13 @@ def Gridsharing(l, b, c):
     shareAssignment = Compute_Sharers(l, b, r)
     Display_Stats(l, b, c, r)
     Display_Gridshare(shareAssignment, numServers/r)
-    Export_CSV(shareAssignment,numServers/r,"outputfile.csv")
+
+def GridsharingSave(l, b, c, filename):
+    r = Choose_Num_Rows(l, b, c)
+    numServers = Compute_Min_N(l, b, c, r)
+    shareAssignment = Compute_Sharers(l, b, r)
+    Display_Stats(l, b, c, r)
+    Export_CSV(shareAssignment,numServers/r, filename)
 
 # Utilizing r for smallest number of servers required
 # r = 4b + l + c + 1
@@ -214,14 +220,17 @@ def driverPart2():
     print "------ GridSharing ------"
     print "Options:"
     print "\t1. Compute shares"
-    print "\t2. Plot characteristics"
-    print "\t3. Exit"
+    print "\t2. Store Shares in File"
+    print "\t3. Plot characteristics"
+    print "\t4. Exit"
     choice = input("Choice: ")
     if (int(choice) == 1):
         driverPart2Shares()
     elif (int(choice) == 2):
-        driverPart2Plot()
+        driverPart2Save()
     elif (int(choice) == 3):
+        driverPart2Plot()
+    elif (int(choice) == 4):
         exit(0)
     else:
         print "Error in choice input"
@@ -234,6 +243,16 @@ def driverPart2Shares():
     b = input("Byzantine Servers (b) = ")
     c = input("Crash Servers (c) = ")
     Gridsharing(int(l), int(b), int(c))
+    raw_input("Select enter to return to the main menu.")
+
+def driverPart2Save():
+    print "------ GridSharing Compute Shares ------"
+    print "Give an l, b, c, r to simulate GridSharing"
+    l = input("Leaky Servers (l) =  ")
+    b = input("Byzantine Servers (b) = ")
+    c = input("Crash Servers (c) = ")
+    filename = raw_input("Provide a .csv file to store the resulting data: ")
+    GridsharingSave(int(l), int(b), int(c), filename)
     raw_input("Select enter to return to the main menu.")
 
 def driverPart2Plot():
