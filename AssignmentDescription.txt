@@ -57,11 +57,13 @@ Implement the Grid Sharing algorithm as described in the "An Approach for Fault 
 	Server Blowup
 	Number of Shares
 
-- User should be able to provide an l, b, and c as well as a range for r to graph these characteristics.
+- Prompt the user for an l, b, and c as well as a range for r
+
+- You will need to perform bounds checking on the user inputs.
 
 3. Store share allocation in a CSV file.
 
-- allows the user to provide a Filename to store the outputted table into a .csv file that can easily be viewed in a spreadsheet.
+- Prompt the user to provide a filename and store the outputted table into a .csv file that can easily be viewed in a spreadsheet.
 
 
 
