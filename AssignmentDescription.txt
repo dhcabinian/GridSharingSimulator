@@ -49,6 +49,20 @@ The user should be able to provide an l, b, and c as well as a range for r to gr
 Extra Credit
 Add a separate option that allows the user to input a short string (less than 5 characters) as a secret and show how the secret is corrupted when an incorrect number of servers, or incorrect number of rows, are queried for the secret, but retrieved when providing a valid subset of servers.
 
+Useful Links/Functions:
+
+Gridsharing Paper: http://blough.ece.gatech.edu/6102/papers/grid_sharing.pdf
+
+How to Share a Secret Paper: http://blough.ece.gatech.edu/6102/papers/shamir.pdf
+
+Python’s imports:
+prettytable: for use when printing the tables to the terminal
+matplotlib.pyplot: for graphing plots
+numpy: for creating ranges
+csv: for printing to files
+
+
+
 Turn-in materials:
 A .zip file, uploaded to T-Square, containing the following:
 1) Your code
